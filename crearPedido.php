@@ -1,0 +1,168 @@
+<?php
+include 'funciones/handler.php';
+?>
+
+<body>
+    <!--  wrapper -->
+    <div id="wrapper">
+        <!-- navbar top -->
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation" id="navbar">
+            <!-- navbar-header -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">
+					<img src="assets/img/logo.png" alt="" />
+                </a>
+            </div>
+            <!-- end navbar-header -->
+            <!-- navbar-top-links -->
+<!-- INCLUIR MENU SUPERIOR PARA QUE SEA MOSTRADO EN TODAS LAS PAGINAS -->
+		<?php
+		include 'iconosMenuSuperior.php';
+		?>			
+            <!-- end navbar-top-links -->
+
+        </nav>
+        <!-- end navbar top -->
+
+        <!-- navbar side -->
+		
+<!-- INCLUIR MENU LATERAL PARA QUE SEA MOSTRADO EN TODAS LAS PAGINAS -->
+<?php
+include 'menuPrincipal.php';
+?>
+
+        <!-- end navbar side -->
+        <!--  page-wrapper -->
+        <div id="page-wrapper">
+
+            <div class="row">
+                <!-- Page Header TITULO DE LA PAGINA ¿DINAMICO?-->
+                <div class="col-lg-12">
+                    <h1 class="page-header">CREAR PEDIDO</h1>
+                </div>
+                <!--End Page Header -->
+            </div>
+			
+<!-- Welcome MENSAJE DE BIENVENIDA A LA PLATAFORMA-->
+            <!--<div class="row">
+                <div class="col-lg-12">
+                    <div class="alert alert-info">
+                        <i class="fa fa-folder-open"></i><b>&nbsp;Hello!</b>Welcome Back <b>Jonny Deen</b>
+						<i class="fa  fa-pencil"></i><b>&nbsp;2,000 </b>Support Tickets Pending to Answere. nbsp;
+                    </div>
+                </div>
+            </div>-->
+			<!--end  Welcome -->
+<!--SECCION DE CONTENIDOS DE LA PAGINA-->
+
+<div class="row">
+	<div class="col-lg-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Crear pedido para Solicitud
+			</div>
+			<div class="panel-body">
+				<div class="row">
+				<div class="col-lg-12">				
+					
+					<form role="form" action="funciones/registrarPedido.php" method="post" name="crearPedido">
+					<input type="submit" class="btn btn-primary" value="Crear pedido">			
+						
+					</form>
+				</div>
+				</div>				
+			</div>
+		</div>
+	</div>
+	
+	<div class="col-lg-6">
+                    <!-- Advanced Tables -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                             Inventario producto
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+							<?php
+										$sql = "SELECT * from pedidos;";
+										$result = $conexion->query($sql);					
+										$numfilas = $result->num_rows;
+						
+										if ($result->num_rows > 0) {
+							?>
+                                <table class="table table-striped table-bordered table-hover" id="detalleInventarioP">
+                                    <thead>
+                                        <tr>
+                                            <th>ID Producto</th>
+                                            <th>Nombre</th>
+                                            <th>Cantidad</th>
+                                            <th>Sucursal</th>                                            
+                                        </tr>
+                                    </thead>
+									<tbody>
+							<?php							
+											while($row = $result->fetch_assoc()) {
+												echo '<tr class="odd gradeX">';
+												echo "<td>".$row['prod_id']."</td>";
+												echo "<td>".$row['prod_nombre']."</td>";
+												echo "<td>".$row['inve_cantidad']."</td>";
+												echo "<td>".$row['sucr_descripcion']."</td>";
+												echo "</tr>";
+											}
+										} else {
+											echo '<div class="alert alert-info"><strong>NO SE ENCONTRARON RESULTADOS</strong></div>';
+										}
+										$conexion->close();
+									?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!--End Advanced Tables -->
+                </div>
+</div>
+
+<!--SECCION DE BIENVENIDA RAPIDA MENSAJE-->
+<?php
+
+
+	
+?>			
+        </div>
+        <!-- end page-wrapper -->
+
+    </div>
+    <!-- end wrapper -->
+
+    <!-- Core Scripts - Include with every page -->
+<?php
+	include 'scripts.php';
+	mysqli_close($conexion); 
+?>	
+	<script src="assets/plugins/dataTables/dataTables.bootstrap.js"></script>
+	<script src="assets/plugins/dataTables/jquery.dataTables.js"></script>
+	<script src="assets/plugins/dataTables/dataTables.bootstrap.js"></script>
+	<script>
+		$(document).ready(function () {
+			$('#detalleInventarioP').dataTable();			
+		});
+	</script> 
+<script>
+function valida_envio(){ 
+   	
+   	alert("Se creo el tipo correctamente.");
+   	document.registrarProducto.submit(); 
+}
+</script>
+
+</body>
+
+</html>
